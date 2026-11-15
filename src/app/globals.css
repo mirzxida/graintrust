@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --gt-bg: #f8fafc;
+    --gt-surface: #ffffff;
+    --gt-border: #e2e8f0;
+    --gt-text: #0f172a;
+    --gt-muted: #475569;
+    --gt-primary: #1d4ed8;
+    --gt-emerald: #059669;
+  }
+
+  html {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--gt-bg);
+    color: var(--gt-text);
+  }
+
+  :where(a:any-link, button, input, select, textarea, [tabindex="0"]):focus-visible {
+    outline: 2px solid #1d4ed8;
+    outline-offset: 2px;
+  }
+}
+
+/* Visually hidden utility that stays accessible to screen readers and shows on focus */
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Native <dialog> modal scroll containment (modern-web-guidance: dialog) */
+dialog:modal {
+  overscroll-behavior: contain;
+  margin: auto;
+  max-inline-size: min(94vw, 42rem);
+  max-block-size: 90dvb;
+}
+
+dialog::backdrop {
+  background: rgb(15 23 42 / 0.55);
+  backdrop-filter: blur(2px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Branded customizable <select> with graceful native fallback (modern-web-guidance: branded-select-styling) */
+.gt-role-select,
+.gt-role-select::picker(select) {
+  appearance: base-select;
+}
+
+.gt-role-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-inline-size: 14.5rem;
+  min-block-size: 2.75rem;
+  padding-inline: 0.75rem;
+  padding-block: 0.45rem;
+  font: inherit;
+  font-size: max(0.875rem, 1em);
+  font-weight: 500;
+  color: #0f172a;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.gt-role-select:hover {
+  border-color: #94a3b8;
+  background-color: #f8fafc;
+}
+
+.gt-role-select::picker(select) {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.625rem;
+  padding: 0.25rem;
+  margin-block-start: 0.35rem;
+  box-shadow: 0 10px 25px -5px rgb(15 23 42 / 0.12), 0 4px 10px -4px rgb(15 23 42 / 0.08);
+}
+
+.gt-role-select::picker-icon {
+  color: #475569;
+}
+
+.gt-role-select option {
+  padding-inline: 0.625rem;
+  padding-block: 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.gt-role-select option:hover,
+.gt-role-select option:checked {
+  background-color: #eff6ff;
+  color: #1e3a8a;
+}
+
+.gt-role-select option::checkmark {
+  color: #1d4ed8;
+}
+
+/* Form controls accessible baseline */
+.gt-control {
+  font: inherit;
+  font-size: max(1rem, 1em);
+  min-block-size: 44px;
+}
+
+/* Responsive data table with container query stacked cards (modern-web-guidance: responsive-table) */
+.gt-table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  scrollbar-gutter: stable;
+  container-type: inline-size;
+}
+
+.gt-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.gt-table thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 2;
+}
+
+.gt-table tbody th[scope="row"] {
+  position: sticky;
+  inset-inline-start: 0;
+  background-color: #ffffff;
+  z-index: 1;
+}
+
+.gt-table tbody tr:hover th[scope="row"] {
+  background-color: #f8fafc;
+}
+
+@container (width < 680px) {
+  .gt-table,
+  .gt-table thead,
+  .gt-table tbody,
+  .gt-table tr,
+  .gt-table th,
+  .gt-table td {
+    display: block;
+  }
+
+  .gt-table thead {
+    display: none;
+  }
+
+  .gt-table tbody tr {
+    margin-block-end: 0.875rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.625rem;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+
+  .gt-table tbody th[scope="row"] {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+    background-color: #f8fafc;
+    border-block-end: 1px solid #e2e8f0;
+    padding-inline: 1rem;
+    padding-block: 0.75rem;
+  }
+
+  .gt-table tbody td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-inline: 1rem;
+    padding-block: 0.625rem;
+    border-block-end: 1px solid #f1f5f9;
+    text-align: right;
+  }
+
+  .gt-table tbody td:last-child {
+    border-block-end: none;
+    justify-content: flex-end;
+  }
+
+  .gt-table tbody td::before {
+    content: attr(data-label) ": ";
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    text-align: left;
+    flex-shrink: 0;
+  }
+}
+
+/* Tab active indicator using border on pseudo-element, not box-shadow or background alone */
+.gt-tab[aria-selected="true"] {
+  position: relative;
+  color: #1d4ed8;
+}
+
+.gt-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  border-block-end: 2px solid #1d4ed8;
+}
